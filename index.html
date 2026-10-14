@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Um pedido especial ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffc8dd;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .coracao {
+            font-size: 65px;
+            margin-bottom: 15px;
+            animation: pulsar 1s infinite alternate;
+        }
+
+        h1 {
+            color: #590d22;
+            font-size: clamp(25px, 7vw, 36px);
+            margin-bottom: 35px;
+        }
+
+        .botoes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 60px;
+        }
+
+        button {
+            border: 2px solid #e88ba7;
+            background: #ffb3c1;
+            color: #590d22;
+            padding: 13px 27px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #sim {
+            background: #ff8fab;
+        }
+
+        #nao {
+            position: relative;
+            z-index: 2;
+        }
+
+        #mensagem {
+            display: none;
+            margin-top: 28px;
+            color: #590d22;
+            font-size: 20px;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        @keyframes pulsar {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+        }
+
+        .brilho {
+            position: fixed;
+            pointer-events: none;
+            animation: subir 3s linear forwards;
+            font-size: 24px;
+        }
+
+        @keyframes subir {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <div class="coracao">❤️</div>
+
+        <!-- PERSONALIZE A PERGUNTA AQUI -->
+        <h1 id="pergunta">Amor, vamos transar 5 vezes seguidas?</h1>
+
+        <div class="botoes" id="botoes">
+            <button id="sim" onclick="aceitou()">Sim ❤️</button>
+            <button id="nao">Não 🙈</button>
+        </div>
+
+        <!-- PERSONALIZE A MENSAGEM AQUI -->
+        <div id="mensagem">
+            Eu te amo, meu amor! ❤️🥹
+            <br>
+           Você sera meu Lanchinho mais tarde, Delícia! 💕
+        </div>
+    </main>
+
+    <script>
+        const botaoNao = document.getElementById("nao");
+
+        function fugir() {
+            botaoNao.style.position = "fixed";
+
+            const margem = 15;
+            const largura = botaoNao.offsetWidth;
+            const altura = botaoNao.offsetHeight;
+
+            const maxX = Math.max(
+                margem,
+                window.innerWidth - largura - margem
+            );
+
+            const maxY = Math.max(
+                margem,
+                window.innerHeight - altura - margem
+            );
+
+            const x = margem + Math.random() * (maxX - margem);
+            const y = margem + Math.random() * (maxY - margem);
+
+            botaoNao.style.left = x + "px";
+            botaoNao.style.top = y + "px";
+        }
+
+        botaoNao.addEventListener("pointerenter", fugir);
+        botaoNao.addEventListener("touchstart", function(event) {
+            event.preventDefault();
+            fugir();
+        }, { passive: false });
+
+        function aceitou() {
+            document.getElementById("pergunta").textContent =
+                "SABIA QUE VOCÊ IA ACEITAR! ❤️";
+
+            document.getElementById("botoes").style.display = "none";
+            document.getElementById("mensagem").style.display = "block";
+
+            for (let i = 0; i < 25; i++) {
+                setTimeout(criarCoracao, i * 100);
+            }
+        }
+
+        function criarCoracao() {
+            const coracao = document.createElement("div");
+            coracao.className = "brilho";
+            coracao.textContent = ["❤️", "💕", "💖", "💗"][
+                Math.floor(Math.random() * 4)
+            ];
+
+            coracao.style.left = Math.random() * 100 + "vw";
+            coracao.style.top = "100vh";
+
+            document.body.appendChild(coracao);
+
+            setTimeout(() => coracao.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
